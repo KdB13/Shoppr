@@ -1,0 +1,60 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block page-title %} Get Started {% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Get Started</h1>
+  
+  <form action="{% url 'catalog:register' %}" method="post">
+    {% csrf_token %}
+    
+    <div class="container-fluid px-0">
+      <div class="row">
+        <div class="col-sm-6 col-lg-4 mb-3">
+          <label for="first-name" class="form-label">First name</label>
+          <input type="text" class="form-control" name="{{ form.first_name.html_name }}" id="first-name" placeholder="e.g. John" value="{{ form.first_name.value|default:'' }}" required>
+        </div>
+        
+        <div class="col-sm-6 col-lg-4 mb-3">
+          <label for="last-name" class="form-label">Last name</label>
+          <input type="text" class="form-control" name="{{ form.last_name.html_name }}" id="last-name" placeholder="e.g. Doe" value="{{ form.last_name.value|default:'' }}" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" name="{{ form.email.html_name }}" id="email" placeholder="e.g. abc@example.com" value="{{ form.email.value|default:'' }}" required>
+
+          {% if form.email.errors %}
+            {% for error in form.email.errors %}
+              <p class="form-text text-danger">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-sm-6 col-lg-4 mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" name="{{ form.password.html_name }}" id="password" value="{{ form.password.value|default:'' }}" required>
+          
+          {% for error in form.non_field_errors %}
+            <p class="form-text text-danger">{{ error }}</p>
+          {% endfor %}
+        </div>
+
+        <div class="col-sm-6 col-lg-4 mb-3">
+          <label for="conf-password" class="form-label">Re-enter your password</label>
+          <input type="password" class="form-control" name="{{ form.conf_password.html_name }}" id="conf-password" value="{{ form.conf_password.value|default:'' }}" required>
+        </div>
+      </div>
+    </div>
+   
+    <div class="mb-2">
+      <button class="btn btn-primary">Register</button>
+    </div>
+
+    <p>Already registered? <a href="{% url 'catalog:login' %}" class="link-primary">Login</a></p>
+  </form>
+{% endblock %}

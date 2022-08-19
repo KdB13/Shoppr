@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% block title %}
+    <title>
+      {% block page-title %}<!--e.g. Home-->{% endblock %} - Shoppr for Vendors
+    </title>
+    {% endblock %}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <!-- Bootstrap with customizations -->
+    <link rel="stylesheet" href="{% static 'catalog/css/vendors/custom.css' %}">
+
+    <link rel="stylesheet" href="{% static 'catalog/css/styles.css' %}">
+
+    {% block styles %}<!-- Custom CSS per page -->{% endblock %}
+  </head>
+
+  <body>
+    <header class="bg-primary">
+      <div class="container">
+        <nav class="navbar navbar-expand-md navbar-dark">
+          <a href="{% url 'catalog:vendors-login' %}" class="navbar-brand h1">
+            Shoppr <span class="lead">for vendors</span>
+          </a>
+          <ul class="navbar-nav ms-auto">
+            <li><a href="#" class="nav-link">About</a></li>
+            {% block extra_links %}<!-- Extra page specific links -->{% endblock %}
+          </ul>
+
+          {% block extra_items %}<!-- Some extra items on the navbar -->{% endblock %}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        {% if vendor %}
+          <p class="lead fs-4 text-end">Welcome, <span class="fw-bold">{{ vendor.name }}</span></p>
+          <hr>
+        {% endif %}
+
+        {% block content %} {% endblock %}
+      </div>
+    </main>
+
+    <footer class="bg-light py-4 text-center">
+      <div class="container">
+        <p class="lead mb-1">Made with ❤️ in Python + HTML & CSS</p>
+        <p class="mb-0">&copy; Copyright 2022 Shoppr</p>
+      </div>
+    </footer>
+  </body>
+
+</html>

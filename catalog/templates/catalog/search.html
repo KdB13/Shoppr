@@ -1,0 +1,51 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block page-title %} Search {% endblock %}
+
+{% load static %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'catalog/css/products.css' %}">
+{% endblock %}
+
+{% block extra_links %}
+  <li><a href="{% url 'catalog:logout' %}" class="nav-link">Logout</a></li>
+{% endblock %}
+
+{% block extra_items %}
+{% include "catalog/search_form.html" %}
+{% endblock %}
+
+{% block content %}
+  <h1 class="fw-normal h4">
+    {% if product_list %}
+      {{ product_list.count }} result{{ product_list.count|pluralize }} found for "{{ q }}"
+    {% else %}
+      No search query given.
+    {% endif %}
+  </h1>
+
+  {% if product_list %}
+  <div class="container my-5">
+      
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2 g-lg-3">
+      {% for product in product_list %}
+      <div class="col">
+        <div class="card">
+          <a href="{{ product.get_absolute_url }}">
+            <img class="card-img-top p-2" src="{{ product.photo.url }}" alt="A man wearing blue shirt">
+          </a>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="card-title h5 m-0">
+                <a href="{{ product.get_absolute_url }}" class="link-dark text-decoration-none">{{ product.title }}</a>
+              </h2>
+              <p class="card-text text-primary lead fw-bold">{{ product.format_price }}</p>
+            </div>
+            <button class="btn btn-outline-secondary btn-sm w-100">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "catalog/vendors/base.html" %}
+
+{% block page-title %} Your Products {% endblock %}
+
+{% load static %}
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'catalog/css/vendors/products.css' %}">
+{% endblock %}
+
+{% block extra_links %}
+  <li><a href="{% url 'catalog:vendors-products' %}" class="nav-link active">Products</a></li>
+  <li><a href="{% url 'catalog:vendors-profile' %}" class="nav-link">Profile</a></li>
+  <li><a href="{% url 'catalog:vendors-logout' %}" class="nav-link">Logout</a></li>
+{% endblock %}
+
+{% block content %}
+  <section>
+    <div class="mt-5 d-flex justify-content-between align-items-center">
+      <h1 class="h4 m-0">Product Details</h1>
+      <a href="{% url 'catalog:vendors-add-product' %}" class="btn btn-info">Add Product</a>
+    </div>
+
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Title</th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% if product_list %}
+          {% for product in product_list %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ product.title }}</td>
+              <td class="py-3">
+                {% if product.photo %}
+                  <img src="{{ product.photo.url }}" alt="{{ product.title }}">
+                {% else %}
+                  No Photo
+                {% endif %}
+              </td>
+              <td>{{ product.format_price }}</td>
+              <td class="fit">{{ product.stock }}</td>
+              <td class="text-end">
+                <a href="{{ product.get_edit_url }}" class="ms-1 btn btn-sm btn-secondary">Edit</a>
+                <a href="{{ product.get_delete_url }}" class="ms-1 btn btn-sm btn-danger">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="5" class="text-center text-secondary fs-5">No products are available!</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

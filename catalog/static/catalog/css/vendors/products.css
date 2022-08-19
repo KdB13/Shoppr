@@ -1,0 +1,13 @@
+table img {
+    max-width: 100px;
+}
+
+table td {
+    vertical-align: middle;
+}
+
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}

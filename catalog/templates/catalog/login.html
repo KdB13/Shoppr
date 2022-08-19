@@ -1,0 +1,41 @@
+{% extends "catalog/base_generic.html" %}
+
+{% block page-title %} Login {% endblock %}
+
+{% block content %}
+  <div class="messages">
+    {% if messages %}
+      {% for message in messages %}
+      <p class="fs-5 text-secondary">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <h1 class="mb-4">Login</h1>  
+
+  <form action="{% url 'catalog:login' %}" method="post">
+    {% csrf_token %}
+
+    <div class="container-fluid px-0">
+      <div class="row">
+        <div class="col-md-6 col-lg-5 mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control " name="{{ form.email.html_name }}" id="email" placeholder="e.g. abc@example.com" value="{{ form.email.value|default:'' }}" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6 col-lg-5 mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control " name="{{ form.password.html_name }}" id="password" value="{{ form.password.value|default:'' }}" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <button class="btn btn-primary">Login</button>
+    </div>
+
+    <p>New to Shoppr? <a href="{% url 'catalog:register' %}" class="link-primary">Register</a></p>
+  </form>
+{% endblock %}

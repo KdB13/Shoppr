@@ -1,0 +1,13 @@
+.navbar {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.navbar li {
+    margin-left: 1em;
+}
+
+main {
+    padding-top: 2em;
+    padding-bottom: 4em;
+}
